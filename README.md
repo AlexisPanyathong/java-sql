@@ -33,40 +33,51 @@ clone https://github.com/pthom/northwind_psql.git
 Answer the following data queries. Keep track of the SQL you write by pasting it into this document under its appropriate header below. You will be submitting that through the regular fork, change, pull process.
 
 
-### find all customers that live in London. Returns 6 records.
-> This can be done with SELECT and WHERE clauses:
+### 1. find all customers that live in London. Returns 6 records.
+<!-- > This can be done with SELECT and WHERE clauses: -->
 SELECT contact_name, city
 FROM customers
 WHERE city = 'London'
 
-### find all customers with postal code 1010. Returns 3 customers.
-> This can be done with SELECT and WHERE clauses:
+### 2. find all customers with postal code 1010. Returns 3 customers.
+<!-- > This can be done with SELECT and WHERE clauses: -->
 SELECT contact_name, postal_code
 FROM customers
 WHERE postal_code = '1010'
 
-### find the phone number for the supplier with the id 11. Should be (010) 9984510.
-> This can be done with SELECT and WHERE clauses:
+### 3. find the phone number for the supplier with the id 11. Should be (010) 9984510.
+<!-- > This can be done with SELECT and WHERE clauses: -->
+SELECT phone, supplier_id
+FROM suppliers
+WHERE supplier_id = '11'
 
 
-
-### list orders descending by the order date. The order with date 1998-05-06 should be at the top.
-> This can be done with SELECT, WHERE, and ORDER BY clauses
-
-
-### find all suppliers who have names longer than 20 characters. You can use `length(company_name)` to get the length of the name. Returns 11 records.
-> This can be done with SELECT and WHERE clauses
+### 4. list orders descending by the order date. The order with date 1998-05-06 should be at the top.
+<!-- > This can be done with SELECT, WHERE, and ORDER BY clauses: -->
+SELECT *
+FROM orders
+ORDER BY order_date DESC
 
 
-### find all customers that include the word 'MARKET' in the contact title. Should return 19 records.
-> This can be done with SELECT and a WHERE clause using the LIKE keyword
+### 5. find all suppliers who have names longer than 20 characters. You can use `length(company_name)` to get the length of the name. Returns 11 records.
+<!-- > This can be done with SELECT and WHERE clauses: -->
+SELECT company_name
+FROM suppliers
+WHERE length(company_name) > 20
+
+
+### 6. find all customers that include the word 'MARKET' in the contact title. Should return 19 records.
+<!-- > This can be done with SELECT and a WHERE clause using the LIKE keyword
 
 > Don't forget the wildcard '%' symbols at the beginning and end of your substring to denote it can appear anywhere in the string in question
 
-> Remember to convert your contact title to all upper case for case insenstive comparing so upper(contact_title)
+> Remember to convert your contact title to all upper case for case insenstive comparing so upper(contact_title) -->
 
+SELECT contact_title
+FROM customers
+WHERE upper(contact_title) LIKE ('%MARKET%')
 
-### add a customer record for   
+### 7. add a customer record for   
 * customer id is 'SHIRE'
 * company name is 'The Shire'
 * contact name is 'Bilbo Baggins'
