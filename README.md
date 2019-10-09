@@ -97,17 +97,26 @@ SET postal_code = 11122
 WHERE customer_id = 'SHIRE'
 
 ### 9. list orders grouped by customer showing the number of orders per customer. _Rattlesnake Canyon Grocery_ should have 18 orders.
-> This can be done with SELECT, COUNT, JOIN and GROUP BY clauses. Your count should focus on a field in the Orders table, not the Customer table
+<!-- > This can be done with SELECT, COUNT, JOIN and GROUP BY clauses. Your count should focus on a field in the Orders table, not the Customer table
 
-> There is more information about the COUNT clause on [W3 Schools](https://www.w3schools.com/sql/sql_count_avg_sum.asp)
-
+> There is more information about the COUNT clause on [W3 Schools](https://www.w3schools.com/sql/sql_count_avg_sum.asp) -->
+SELECT c.company_name, count(o.customer_id) as number_of_orders
+FROM orders o JOIN customers c on o.customer_id = c.customer_id
+GROUP BY c.company_name
 
 ### 10. list customers names and the number of orders per customer. Sort the list by number of orders in descending order. _Save-a-lot Markets should be at the top with 31 orders followed by _Ernst Handle_ with 30 orders. Last should be _Centro comercial Moctezuma_ with 1 order.
-> This can be done by adding an ORDER BY clause to the previous answer
-
+<!-- > This can be done by adding an ORDER BY clause to the previous answer -->
+SELECT count(o.customer_id), c.company_name 
+FROM orders o JOIN customers c ON o.customer_id = c.customer_id 
+GROUP BY c.company_name 
+ORDER BY count(o.customer_id) DESC
 
 ### 11. list orders grouped by customer's city showing number of orders per city. Returns 69 Records with _Aachen_ showing 6 orders and _Albuquerque_ showing 18 orders.
-> This is very similar to the previous two queries, however, it focuses on the City rather than the CustomerName
+<!-- > This is very similar to the previous two queries, however, it focuses on the City rather than the CustomerName -->
+SELECT count(o.customer_id), c.city 
+FROM orders o JOIN customers c ON o.customer_id = c.customer_id 
+GROUP BY c.city 
+ORDER BY c.city
 
 
 ## 12. Data Normalization
@@ -116,11 +125,29 @@ Note: This step does not use PostgreSQL!
 
 Take the following data and normalize it into a 3NF database.  You can use the website https://www.tablesgenerator.com/markdown_tables# to help generate Markdown Tables.
 
-| Person Name | Pet Name | Pet Type | Pet Name 2 | Pet Type 2 | Pet Name 3 | Pet Type 3 | Fenced Yard | City Dweller |
+<!-- | Person Name | Pet Name | Pet Type | Pet Name 2 | Pet Type 2 | Pet Name 3 | Pet Type 3 | Fenced Yard | City Dweller |
 |-------------|----------|----------|------------|------------|------------|------------|-------------|--------------|
 | Jane        | Ellie    | Dog      | Tiger      | Cat        | Toby       | Turtle     | No          | Yes          |
 | Bob         | Joe      | Horse    |            |            |            |            | No          | No           |
-| Sam         | Ginger   | Dog      | Miss Kitty | Cat        | Bubble     | Fish       | Yes         | No           |
+| Sam         | Ginger   | Dog      | Miss Kitty | Cat        | Bubble     | Fish       | Yes         | No           | -->
+
+Person Table
+| Person Id | Person Name | Fenced Yard | City Dweller |   |
+|-----------|-------------|-------------|--------------|---|
+| 1         | Jane        | No          | Yes          |   |
+| 2         | Bob         | No          | Yes          |   |
+| 3         | Sam         | Yes         | No           |   |
+
+Pet Table
+| Pet Id | Person Id | Pet Type | Pet Name   |   |
+|--------|-----------|----------|------------|---|
+| 1      | 1         | Dog      | Ellie      |   |
+| 2      | 1         | Cat      | Tiger      |   |
+| 3      | 1         | Tutrle   | Toby       |   |
+| 4      | 2         | Horse    | Joe        |   |
+| 5      | 3         | Dog      | Ginger     |   |
+| 6      | 3         | Cat      | Miss Kitty |   |
+| 7      | 3         | Fish     | Bubble     |   |
 
 ---
 ## Stretch Goals
